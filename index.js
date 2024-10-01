@@ -180,3 +180,37 @@ const learnerSubmission = [
         }
     }
 ];
+
+function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions) {
+    const result = [];
+    const currentDate = "2024-09-30";
+
+    const learners = {};
+
+    learnerSubmissions.forEach(submission => {
+        const { learner_id, assigment_id, submission: submissionData } = submission;
+
+        const assignment = assignmentGroup.assignments.find(a => a.id === assigment_id);
+
+        if (!assignment || assignment.due_at > currentDate) return;
+
+        learners[learner_id] = learners[learner_id] || { id: learner_id, avg: 0, totalPointsEarned: 0, totalPointsPossible: 0 };
+
+        const percentage = submissionData.score / assignment.points_possible;
+
+        learners[learner_id][assigment_id] = percentage;
+        learners[learner_id].totalPointsEarned += submissionData.score;
+        learners[learner_id].totalPointsPossible += assignment.points_possible;
+    });
+
+    for (const learner_id in learners) {
+        const learner = learners[learner_id];
+        learner.avg = (learner.totalPointsEarned / learner.totalPointsPossible) * 100;
+        delete learner.totalPointsEarned;
+        delete learner.totalPointsPossible;
+        result.push(learner);
+    }
+    return result;
+}
+
+console.log(getLearnerData(courseInfo, assignmentGroup, learnerSubmission));
