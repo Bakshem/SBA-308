@@ -180,17 +180,3 @@ const learnerSubmission = [
         }
     }
 ];
-
-function getLearnerData(courseInfo, assignmentGroup, [learnerSubmission] ) {
-    const result = { };
-    learnerSubmission.submission.forEach(score => {
-        
-        
-    });
-
-
-
-}    
-const result = getLearnerData (courseInfo, assignmentGroup, learnerSubmission );
-
-console.log(result);
