@@ -181,6 +181,18 @@ const learnerSubmission = [
     }
 ];
 
+function isValidSubmission(submission, assignment) {
+    const score = submission.submission.score;
+    const pointsPossible = assignment.points_possible;
+  
+    if (pointsPossible === 0 || typeof score !== "number" || isNaN(score)) {
+      return false;
+    } else { 
+      return true;
+    }
+  }
+
+
 function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions) {
     const result = [];
     const currentDate = "2024-09-30";
